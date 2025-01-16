@@ -54,7 +54,9 @@ class WatchInterpelliCommand extends Command
     public function handle()
     {
         // it is worth it?
-        $record = NotifiedDays::where('date', Carbon::now())->first();
+        $record = NotifiedDays::where('date', '>=', Carbon::now()->format('Y-m-d 00:00:00'))
+            ->where('date', '<=', Carbon::now()->format('Y-m-d 23:59:59'))
+            ->first();
 
         // if day was already notified ... lets get back to do nothing
         if ($record && $record->notified) {
